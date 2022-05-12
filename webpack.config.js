@@ -1,52 +1,8 @@
-// Generated using webpack-cli https://github.com/webpack/webpack-cli
-
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-// const WorkboxWebpackPlugin = require("workbox-webpack-plugin");
-
-
-// process.env.NODE_ENV = "production";
-// const isProduction = process.env.NODE_ENV == "production";
-
-// const config = {
-//   entry: "./src/index.js",
-//   output: {
-//     path: path.resolve(__dirname, "dist"),
-//   },
-//   devServer: {
-//     open: true,
-//     host: "localhost",
-//     port: 8070
-//   },
-//   plugins: [
-//     new HtmlWebpackPlugin({
-//       template: "index.html",
-//     }),
-//
-//     // Add your plugins here
-//     // Learn more about plugins from https://webpack.js.org/configuration/plugins/
-//   ],
-//   module: {
-//     rules: [
-//       {
-//         test: /\.(eot|svg|ttf|woff|woff2|png|jpg|gif)$/i,
-//         type: "asset",
-//       },
-//       {
-//         test: /\.css$/,
-//         use: [
-//           'style-loader',
-//           'css-loader'
-//         ]
-//       }
-//       // Add your rules for custom modules here
-//       // Learn more about loaders from https://webpack.js.org/loaders/
-//     ],
-//   },
-// };
 
 module.exports = {
-  mode: process.env.NODE_ENV || 'development',
+  mode: process.env.NODE_ENV || "development",
   entry: "./src/index.js",
   output: {
     path: path.resolve(__dirname, "dist"),
@@ -54,36 +10,24 @@ module.exports = {
   devServer: {
     open: true,
     host: "localhost",
-    port: 8070
+    port: 8070,
   },
   module: {
     rules: [
-      { test: /\.css$/, use: ['style-loader', 'css-loader'] },
+      { test: /\.css$/, use: ["style-loader", "css-loader"] },
       {
         test: /\.woff2?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        use: 'url-loader?limit=10000',
+        use: "url-loader?limit=10000",
       },
       {
         test: /\.(ttf|eot|svg)(\?[\s\S]+)?$/,
-        use: 'file-loader',
+        use: "file-loader",
       },
     ],
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: 'index.html',
+      template: "index.html",
     }),
   ],
 };
-
-
-// module.exports = () => {
-//   if (isProduction) {
-//     config.mode = "production";
-//
-//     config.plugins.push(new WorkboxWebpackPlugin.GenerateSW());
-//   } else {
-//     config.mode = "development";
-//   }
-//   return config;
-// };
