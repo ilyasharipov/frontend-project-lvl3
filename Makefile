@@ -8,11 +8,11 @@ build:
 	rm -rf dist
 	NODE_ENV=production npx webpack
 
-test:
-	npm test
-
 lint:
 	npx eslint .
 
-test-coverage:
-    npx -n --experimental-vm-modules jest --coverage --coverageProvider=v8
+#test-coverage:
+#	npx jest --bail --coverage --coverageProvider=v8
+#
+#test:
+#	npx jest
