@@ -1,3 +1,4 @@
 import "bootstrap/dist/css/bootstrap.min.css";
- const a = 'asdasdsad' ;
+import  app from './application';
 
+app();

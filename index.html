@@ -1,62 +1,60 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8" />
+<head>
+    <meta charset="utf-8"/>
     <title>Webpack App</title>
-  </head>
+</head>
 
-  <body>
-    <header class="container-fluid bg-black p-5">
-      <div class="row justify-content-center text-white">
-        <div class="col-6 align-self-center">
-          <h1>RSS агрегатор</h1>
-          <p>Начните читать RSS сегодня! Это легко, это красиво.</p>
-          <div class="row">
-            <div class="col">
-              <form class="form-floating">
-                <input
-                  type="name"
-                  class="form-control"
-                  id="floatingInputValue"
-                  placeholder="name@example.com"
-                />
-                <label class="text-black" for="floatingInputValue"
-                  >Input with value</label
-                >
-              </form>
-            </div>
-            <div class="col-auto">
-              <button
-                class="btn btn-outline-success btn-lg h-100"
-                type="submit"
-              >
-                Добавить
-              </button>
-            </div>
-          </div>
-          <p class="text-secondary">https://github.com/</p>
-        </div>
-      </div>
-    </header>
+<body>
+<header class="container-fluid bg-black p-5">
+    <div class="row">
+        <div class="col-10 col-xl-8 col-lg-6 col-md-4 col-sm-2 mx-auto text-white">
+            <h1>RSS агрегатор</h1>
+            <p>Начните читать RSS сегодня! Это легко, это красиво.</p>
+            <form class="rss-form">
+                <div class="row">
+                    <div class="col">
+                        <div class="form-floating text-muted">
+                            <input id="url-input" autofocus="" required="" name="url" aria-label="url"
+                                   class="form-control w-100" placeholder="ссылка RSS" autocomplete="off">
+                            <label for="url-input">Ссылка RSS</label>
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <button
+                                class="btn btn-outline-success btn-lg h-100"
+                                type="submit"
+                                aria-label="add"
+                        >
+                            Добавить
+                        </button>
+                    </div>
+                </div>
+            </form>
 
-    <!-- <main>
-      <div class="container">
-        <div class="row">
-          <div class="col-12">
-            <h1>main</h1>
-          </div>
+            <p class="mt-2 mb-0 text-muted">https://github.com/</p>
         </div>
-      </div>
-    </main>
+    </div>
+</header>
 
-    <footer class="footer-top">
-      <div class="container">
-        <div class="row">
-          <div class="col-12">
-            <h1>footer</h1>
-          </div>
-        </div>
+<!-- <main>
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <h1>main</h1>
       </div>
-    </footer> -->
-  </body>
+    </div>
+  </div>
+</main>
+
+<footer class="footer-top">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <h1>footer</h1>
+      </div>
+    </div>
+  </div>
+</footer> -->
+</body>
 </html>
