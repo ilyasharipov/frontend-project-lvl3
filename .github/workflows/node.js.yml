@@ -37,10 +37,3 @@ jobs:
     - name: Run linter
       run: |
           make lint
-    - name: Test & publish code coverage
-      uses: paambaati/codeclimate-action@v3.0.0
-      env:
-          CC_TEST_REPORTER_ID: 0cf6723dc19d455318ad3c8eff2604eb0e6dc79abb35586c9237b897bace5cef
-      with:
-          coverageCommand: make test-coverage
-          debug: true
