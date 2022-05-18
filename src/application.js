@@ -1,7 +1,7 @@
 import onChange from 'on-change';
 import render from './view.js';
-// import validate from './validation.js';
-// import isEmpty from 'lodash/isEmpty.js'
+import validate from './validation.js';
+import isEmpty from 'lodash/isEmpty.js'
 
 export default () => {
     const elements = {
@@ -10,32 +10,36 @@ export default () => {
             url: document.querySelector('#url-input'),
         }
     };
-    
+
     const state = onChange({
         form: {
+            valid: true,
             processState: 'filling',
+            processError: null,
             fields: {
                 url: '',
             },
-            processError: {},
         }
     }, render(elements));
 
-    elements.form.addEventListener('submit', (e) => {
+    elements.form.addEventListener('submit', (e) =>  {
         e.preventDefault();
-        
+        console.log('hel2');
         const formData = new FormData(e.target);
-
         const urlInputValue = formData.get('url');
-        console.log(elements.form.url);
-        
-        const errors = validate(state.form.fields);
-        // state.form.errors = errors;
-        // state.form.valid = isEmpty(errors);
-        //
-        //
-        // state.form.processState = 'sending';
-        // state.form.processError = null;
+
+        state.form.fields.url = urlInputValue;
+
+        validate(state.form.fields).then((errors) => {
+            console.log(errors);
+            state.form.errors = errors;
+        });
+        console.log(state.form.errors);
+
+        state.form.valid = isEmpty(state.form.errors);
+
+        state.form.processState = 'sending';
+        state.form.processError = null;
 
         // try {
         //     const data = {
