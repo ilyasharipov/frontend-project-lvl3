@@ -24,7 +24,7 @@ export default () => {
 
     elements.form.addEventListener('submit', (e) =>  {
         e.preventDefault();
-        console.log('hel2');
+
         const formData = new FormData(e.target);
         const urlInputValue = formData.get('url');
 
@@ -33,14 +33,11 @@ export default () => {
         validate(state.form.fields).then((errors) => {
             console.log(errors);
             state.form.errors = errors;
+            state.form.processState = 'sending';
+            state.form.processError = null;
         });
-        console.log(state.form.errors);
-
-        state.form.valid = isEmpty(state.form.errors);
-
-        state.form.processState = 'sending';
-        state.form.processError = null;
-
+        
+        
         // try {
         //     const data = {
         //         name: state.form.fields.name,

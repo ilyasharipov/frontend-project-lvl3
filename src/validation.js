@@ -6,9 +6,11 @@ const schema = yup.object().shape({
 });
 
 export default (fields) => {
-    return schema.validate(fields, {abortEarly: false}).then((data) => {
-        return {};
-    }).catch((e) => {
-        return keyBy(e.inner, 'path');
-    });
+    return schema.validate(fields, {abortEarly: false})
+        .then(() => {
+            return {};
+        })
+        .catch((e) => {
+            return keyBy(e.inner, 'path');
+        });
 };

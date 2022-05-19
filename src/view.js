@@ -3,19 +3,19 @@ import has from 'lodash/has.js';
 const handleProcessState = (elements, processState) => {
     switch (processState) {
         case 'sent':
-            elements.container.innerHTML = 'User Created!';
+            // elements.container.innerHTML = 'User Created!';
             break;
 
         case 'error':
-            elements.submitButton.disabled = false;
+            // elements.submitButton.disabled = false;
             break;
 
         case 'sending':
-            elements.submitButton.disabled = true;
+            // elements.submitButton.disabled = true;
             break;
 
         case 'filling':
-            elements.submitButton.disabled = false;
+            // elements.submitButton.disabled = false;
             break;
 
         default:
@@ -29,9 +29,10 @@ const handleProcessError = () => {
 };
 
 const renderErrors = (elements, errors, prevErrors) => {
+    const formBlockElement = elements.form.closest('div');
     Object.entries(elements.fields).forEach(([fieldName, fieldElement]) => {
         const error = errors[fieldName];
-        // правильный путь - проверять модель, а не DOM. Модель - единый источник правды.
+
         const fieldHadError = has(prevErrors, fieldName);
         const fieldHasError = has(errors, fieldName);
         if (!fieldHadError && !fieldHasError) {
@@ -40,40 +41,41 @@ const renderErrors = (elements, errors, prevErrors) => {
 
         if (fieldHadError && !fieldHasError) {
             fieldElement.classList.remove('is-invalid');
-            fieldElement.nextElementSibling.remove();
+            formBlockElement.lastElementChild.remove();
             return;
         }
 
         if (fieldHadError && fieldHasError) {
-            const feedbackElement = fieldElement.nextElementSibling;
+            const feedbackElement = formBlockElement.lastElementChild;
             feedbackElement.textContent = error.message;
             return;
         }
 
         fieldElement.classList.add('is-invalid');
         const feedbackElement = document.createElement('div');
-        feedbackElement.classList.add('invalid-feedback');
+        feedbackElement.classList.add('feedback', 'm-0', 'position-absolute', 'small', 'text-danger');
         feedbackElement.textContent = error.message;
-        fieldElement.after(feedbackElement);
+        
+        // fieldElement.after(feedbackElement);
+        formBlockElement.append(feedbackElement);
     });
 };
 
 export default (elements) => (path, value, prevValue) => {
     switch (path) {
         case 'form.processState':
+            console.log('process state DA!')
             handleProcessState(elements, value);
             break;
 
         case 'form.processError':
+            console.log('process eror DA!')
             handleProcessError();
             break;
 
-        case 'form.valid':
-            console.log('valid disable!')
-            // elements.submitButton.disabled = !value;
-            break;
-
         case 'form.errors':
+            console.log('EROR DA?')
+            console.log(prevValue)
             renderErrors(elements, value, prevValue);
             break;
 
