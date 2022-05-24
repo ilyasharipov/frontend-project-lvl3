@@ -15,6 +15,9 @@ export default () => {
     {
       form: {
         valid: true,
+        fields: {
+          url: "",
+        },
         processState: "filling",
         processError: null,
         urls: [],
@@ -28,10 +31,9 @@ export default () => {
 
     const formData = new FormData(e.target);
     const urlInputValue = formData.get("url");
-
-    // state.form.fields.url = urlInputValue;
-
-    validate(state.form.fields)
+    console.log(urlInputValue);
+    state.form.fields.url = urlInputValue;
+    validate(state.form)
       .then((errors) => {
         state.form.errors = errors;
         state.form.valid = isEmpty(errors);

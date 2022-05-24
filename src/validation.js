@@ -1,16 +1,18 @@
-import * as yup from 'yup';
-import keyBy from 'lodash/keyBy.js';
+import * as yup from "yup";
+import keyBy from "lodash/keyBy.js";
 
-const schema = yup.object().shape({
-    url: yup.string().url(),
-});
+const schema = (urls) =>
+  yup.object().shape({
+    url: yup.string().required().url().notOneOf(urls),
+  });
 
-export default (fields) => {
-    return schema.validate(fields, {abortEarly: false})
-        .then(() => {
-            return {};
-        })
-        .catch((e) => {
-            return keyBy(e.inner, 'path');
-        });
+export default (formData) => {
+  return schema(formData.urls)
+    .validate(formData.fields, { abortEarly: false })
+    .then(() => {
+      return {};
+    })
+    .catch((e) => {
+      return keyBy(e.inner, "path");
+    });
 };
