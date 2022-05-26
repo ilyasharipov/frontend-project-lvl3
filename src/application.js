@@ -2,8 +2,20 @@ import onChange from "on-change";
 import render from "./view.js";
 import validate from "./validation.js";
 import isEmpty from "lodash/isEmpty.js";
+import i18n from "i18next";
+import resources from "./locales/index.js";
+
+const languages = ["en", "ru"];
 
 export default () => {
+  const i18nInstance = i18n.createInstance();
+
+  i18nInstance.init({
+    lng: "en",
+    debug: false,
+    resources,
+  });
+  console.log(i18nInstance.t("languages.ru"));
   const elements = {
     form: document.querySelector(".rss-form"),
     fields: {

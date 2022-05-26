@@ -1,9 +1,21 @@
-import * as yup from "yup";
+import { setLocale, object, string } from "yup";
 import keyBy from "lodash/keyBy.js";
 
+setLocale({
+  // use constant translation keys for messages without values
+  mixed: {
+    default: "field_invalid",
+  },
+  // use functions to generate an error object that includes the value from the schema
+  number: {
+    min: ({ min }) => ({ key: "field_too_short", values: { min } }),
+    max: ({ max }) => ({ key: "field_too_big", values: { max } }),
+  },
+});
+
 const schema = (urls) =>
-  yup.object().shape({
-    url: yup.string().required().url().notOneOf(urls),
+  object().shape({
+    url: string().required().url().notOneOf(urls),
   });
 
 export default (formData) => {
