@@ -12,6 +12,13 @@ export default {
           placeholder: "Link Rss",
         },
         button: "Add",
+        errors: {
+          url: {
+            required: "field is required!",
+            url: "ato url!",
+            notOneOf: "takoie uge est!",
+          },
+        },
       },
     },
     // buttons: {

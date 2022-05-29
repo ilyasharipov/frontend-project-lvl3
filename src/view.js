@@ -14,6 +14,7 @@ const handleProcessState = (elements, processState) => {
 
     case "sending":
       console.log("sending");
+
       // elements.submitButton.disabled = true;
       break;
 
@@ -32,7 +33,7 @@ const handleProcessError = () => {
   // вывести сообщение о сетевой ошибке
 };
 
-const renderErrors = (elements, errors, prevErrors) => {
+const renderErrors = (elements, errors, prevErrors, i18nInstance) => {
   const formBlockElement = elements.form.closest("div");
   Object.entries(elements.fields).forEach(([fieldName, fieldElement]) => {
     const error = errors[fieldName];
@@ -51,7 +52,7 @@ const renderErrors = (elements, errors, prevErrors) => {
 
     if (fieldHadError && fieldHasError) {
       const feedbackElement = formBlockElement.lastElementChild;
-      feedbackElement.textContent = error.message;
+      feedbackElement.textContent = i18nInstance.t(error.message);
       return;
     }
 
@@ -64,17 +65,17 @@ const renderErrors = (elements, errors, prevErrors) => {
       "small",
       "text-danger"
     );
-    feedbackElement.textContent = error.message;
+    feedbackElement.textContent = i18nInstance.t(error.message);
 
     // fieldElement.after(feedbackElement);
     formBlockElement.append(feedbackElement);
   });
 };
 
-export default (elements) => (path, value, prevValue) => {
+export default (elements, i18nInstance) => (path, value, prevValue) => {
   switch (path) {
     case "form.processState":
-      handleProcessState(elements, value);
+      handleProcessState(elements, value, i18nInstance);
       break;
 
     case "form.processError":
@@ -83,7 +84,7 @@ export default (elements) => (path, value, prevValue) => {
 
     case "form.errors":
       console.log(prevValue);
-      renderErrors(elements, value, prevValue);
+      renderErrors(elements, value, prevValue, i18nInstance);
       break;
 
     default:

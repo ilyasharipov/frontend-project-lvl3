@@ -2,15 +2,15 @@ import { setLocale, object, string } from "yup";
 import keyBy from "lodash/keyBy.js";
 
 setLocale({
-  // use constant translation keys for messages without values
   mixed: {
-    default: "field_invalid",
+    required: "rss_block.form.errors.url.required",
+    notOneOf: "rss_block.form.errors.url.notOneOf",
   },
-  // use functions to generate an error object that includes the value from the schema
-  number: {
-    min: ({ min }) => ({ key: "field_too_short", values: { min } }),
-    max: ({ max }) => ({ key: "field_too_big", values: { max } }),
+  string: {
+    url: "rss_block.form.errors.url.url",
   },
+  // required: "rss_block.form.errors.url.required",
+  // url: "rss_block.form.errors.url.url",
 });
 
 const schema = (urls) =>

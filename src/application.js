@@ -15,7 +15,8 @@ export default () => {
     debug: false,
     resources,
   });
-  console.log(i18nInstance.t("languages.ru"));
+
+  // console.log(i18nInstance.t("languages.ru"));
   const elements = {
     form: document.querySelector(".rss-form"),
     fields: {
@@ -35,7 +36,7 @@ export default () => {
         urls: [],
       },
     },
-    render(elements)
+    render(elements, i18nInstance)
   );
 
   elements.form.addEventListener("submit", (e) => {
