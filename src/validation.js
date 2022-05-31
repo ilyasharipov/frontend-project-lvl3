@@ -19,6 +19,7 @@ const schema = (urls) =>
   });
 
 export default (formData) => {
+  console.log(formData);
   return schema(formData.urls)
     .validate(formData.fields, { abortEarly: false })
     .then(() => {

@@ -1,14 +1,15 @@
 import onChange from "on-change";
+import {renderErrors} from "./view.js";
 import render from "./view.js";
 import validate from "./validation.js";
 import isEmpty from "lodash/isEmpty.js";
 import i18n from "i18next";
 import resources from "./locales/index.js";
+import has from "lodash/has";
 
 const languages = ["en", "ru"];
 
 export default (initialState) => {
-    // console.log(i18nInstance.t("languages.ru"));
     const elements = {
         form: document.querySelector(".rss-form"),
         fields: {
@@ -22,61 +23,65 @@ export default (initialState) => {
     const state = {
         lng: defaultLanguage,
         form: {
-            valid: true,
             fields: {
                 url: "",
             },
             processState: "filling",
-            processError: null,
-            urls: [],
+            errors: null,
         },
+        urls: [],
         ...initialState
     };
-    
+
     i18nInstance.init({
         lng: state.lng,
         debug: false,
         resources,
     });
 
-    onChange(state, render(elements, i18nInstance));
-    
+    const watchedState = onChange(state, (path, value, prevValue) => {
+        console.log(path)
+        switch (path) {
+            case 'lng':
+                i18nInstance.changeLanguage(value).then(() => render(elements, watchedState, i18nInstance));
+                break;
+
+            case 'form.processState':
+                render(elements, watchedState, i18nInstance);
+                break;
+
+            case "form.errors":
+                renderErrors(elements, value, prevValue, i18nInstance);
+                break;
+
+            default:
+                break;
+        }
+    });
+
     elements.form.addEventListener("submit", (e) => {
         e.preventDefault();
 
         const formData = new FormData(e.target);
         const urlInputValue = formData.get("url");
-        console.log(urlInputValue);
-        state.form.fields.url = urlInputValue;
-        validate(state.form)
+
+        watchedState.form.fields.url = urlInputValue;
+        watchedState.form.processState = "filling";
+
+        validate(watchedState)
             .then((errors) => {
-                state.form.errors = errors;
-                state.form.valid = isEmpty(errors);
+                watchedState.form.errors = errors;
+                // state.form.valid = isEmpty(errors);
             })
             .then(() => {
-                if (!state.form.valid) {
-                    console.log("not true");
-                    return;
-                }
-
-                state.form.urls.push(urlInputValue);
-                state.form.processState = "sending";
-                state.form.processError = null;
-
-                // try {
-                //     const data = {
-                //         name: state.form.fields.name,
-                //         email: state.form.fields.email,
-                //         password: state.form.fields.password,
-                //     };
-                //     await axios.post(routes.usersPath(), data);
-                //     state.form.processState = 'sent';
-                // } catch (err) {
-                //     // в реальных приложениях необходимо помнить об обработке ошибок сети
-                //     state.form.processState = 'error';
-                //     state.form.processError = errorMessages.network.error;
-                //     throw err;
+                // if (!state.form.valid) {
+                //     console.log("not true");
+                //     return;
                 // }
-            });
+
+                watchedState.urls.push(urlInputValue);
+            }).catch(() => {
+
+        });
     });
 };
